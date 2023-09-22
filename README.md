@@ -17,6 +17,7 @@ producer and Prometheus as the metrics database (both not part of the measurment
 
 The following setups are measured (measured part in **bold**):
 1. Avalanche -> /metrics <- **Prometheus Agent -> remote_write** -> Prometheus
-2. Avalanche -> /metrics <- **OTel Collector -> OTLP** -> OTel Collector
-3. Avalanche -> /metrics <- **OTel Collector -> remote_write** -> OTel Collector
-4. Avalanche -> remote_write -> **OTel Collector -> OTLP** -> OTel Collector
+2. Avalanche -> /metrics <- **OTel Collector -> OTLP** -> OTel Collector (-> remote_write -> Prometheus)
+3. Avalanche -> /metrics <- **OTel Collector -> remote_write** -> Prometheus
+4. Avalanche -> /metrics <- **OTel Collector -> remote_write** -> Otel Collector (-> remote_write -> Prometheus)
+5. Avalanche -> remote_write -> **OTel Collector -> OTLP** -> OTel Collector (-> remote_write -> Prometheus)

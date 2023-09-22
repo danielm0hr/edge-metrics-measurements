@@ -1,0 +1,33 @@
+services:
+  avalanche:
+    image: quay.io/prometheuscommunity/avalanche:main
+    command: '--metric-count=5000 --series-count=10 --label-count=10'
+    deploy:
+      resources:
+        limits:
+          memory: 5G
+  otel-col:
+    image: otel/opentelemetry-collector-contrib:0.85.0
+    security_opt:
+      - label=disable
+    volumes:
+      - ${PWD}/otel-col.yml:/etc/otelcol-contrib/config.yaml
+  otel-col-receiver:
+    image: otel/opentelemetry-collector-contrib:0.85.0
+    security_opt:
+      - label=disable
+    volumes:
+      - ${PWD}/otel-col-receiver.yml:/etc/otelcol-contrib/config.yaml
+  prom-receiver:
+    image: quay.io/prometheus/prometheus:main
+    command: '--web.enable-remote-write-receiver'
+    ports:
+      - 9091:9090
+    security_opt:
+      - label=disable
+    volumes:
+      - ${PWD}/prom-receiver.yml:/prometheus/prometheus.yml
+    deploy:
+      resources:
+        limits:
+          memory: 10G
