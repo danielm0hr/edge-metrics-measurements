@@ -1,0 +1,34 @@
+services:
+  avalanche:
+    image: quay.io/prometheuscommunity/avalanche:main
+    command: '--metric-count=5000 --series-count=10 --label-count=10'
+    deploy:
+      resources:
+        limits:
+          memory: 5G
+  prom-agent:
+    image: quay.io/prometheus/prometheus:main
+    command: '--enable-feature=agent'
+    ports:
+      - 9090:9090
+    security_opt:
+      - label=disable
+    volumes:
+      - ${PWD}/prom-agent.yml:/prometheus/prometheus.yml
+    deploy:
+      resources:
+        limits:
+          memory: 5G
+  prom-receiver:
+    image: quay.io/prometheus/prometheus:main
+    command: '--web.enable-remote-write-receiver'
+    ports:
+      - 9091:9090
+    security_opt:
+      - label=disable
+    volumes:
+      - ${PWD}/prom-receiver.yml:/prometheus/prometheus.yml
+    deploy:
+      resources:
+        limits:
+          memory: 10G
