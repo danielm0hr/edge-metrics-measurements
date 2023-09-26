@@ -25,6 +25,7 @@ services:
       - ./prom-agent.yml:/prometheus/prometheus.yml
     depends_on:
       - avalanche
+    container_name: experiment
   prom-receiver:
     image: quay.io/prometheus/prometheus:main
     command: '--web.enable-remote-write-receiver'

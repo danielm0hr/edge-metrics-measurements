@@ -22,6 +22,7 @@ services:
       - ./otel-col.yml:/etc/otelcol-contrib/config.yaml
     depends_on:
       - avalanche
+    container_name: experiment
   prom-receiver:
     image: quay.io/prometheus/prometheus:main
     command: '--web.enable-remote-write-receiver'
