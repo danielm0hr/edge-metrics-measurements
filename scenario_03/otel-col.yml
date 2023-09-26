@@ -1,0 +1,17 @@
+receivers:
+  prometheus:
+    config:
+      scrape_configs:
+        - job_name: avalanche
+          scrape_interval: 5s
+          static_configs:
+            - targets: [avalanche:9001]
+exporters:
+  prometheusremotewrite:
+    endpoint: http://prom-receiver:9090/api/v1/write
+
+service:
+  pipelines:
+    metrics:
+      receivers: [prometheus]
+      exporters: [prometheusremotewrite]
