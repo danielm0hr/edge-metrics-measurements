@@ -1,11 +1,19 @@
 services:
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.47.2
+    container_name: cadvisor
+    ports:
+    - 8080:8080
+    volumes:
+    - /:/rootfs:ro
+    - /var/run:/var/run:rw
+    - /sys:/sys:ro
+    - /var/lib/docker/:/var/lib/docker:ro
   avalanche:
     image: quay.io/prometheuscommunity/avalanche:main
     command: '--metric-count=5000 --series-count=10 --label-count=10'
-    deploy:
-      resources:
-        limits:
-          memory: 5G
+    depends_on:
+      - cadvisor
   prom-agent:
     image: quay.io/prometheus/prometheus:main
     command: '--enable-feature=agent'
@@ -15,10 +23,8 @@ services:
       - label=disable
     volumes:
       - ./prom-agent.yml:/prometheus/prometheus.yml
-    deploy:
-      resources:
-        limits:
-          memory: 5G
+    depends_on:
+      - avalanche
   prom-receiver:
     image: quay.io/prometheus/prometheus:main
     command: '--web.enable-remote-write-receiver'
@@ -28,7 +34,5 @@ services:
       - label=disable
     volumes:
       - ./prom-receiver.yml:/prometheus/prometheus.yml
-    deploy:
-      resources:
-        limits:
-          memory: 10G
+    depends_on:
+      - prom-agent
