@@ -11,13 +11,13 @@ services:
     security_opt:
       - label=disable
     volumes:
-      - ${PWD}/otel-col.yml:/etc/otelcol-contrib/config.yaml
+      - ./otel-col.yml:/etc/otelcol-contrib/config.yaml
   otel-col-receiver:
     image: otel/opentelemetry-collector-contrib:0.85.0
     security_opt:
       - label=disable
     volumes:
-      - ${PWD}/otel-col-receiver.yml:/etc/otelcol-contrib/config.yaml
+      - ./otel-col-receiver.yml:/etc/otelcol-contrib/config.yaml
   prom-receiver:
     image: quay.io/prometheus/prometheus:main
     command: '--web.enable-remote-write-receiver'
