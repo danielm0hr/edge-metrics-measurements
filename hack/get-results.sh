@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 
 BASEDIR=$(dirname "$0")
+timeframe="5m"
 
-results_file='results.csv'
+results_file="results.csv"
 results_tmp_file="$BASEDIR/results.csv.tmp"
-cpu_query='rate(container_cpu_usage_seconds_total{name="experiment"}[20m])'
-mem_query='avg_over_time(container_memory_usage_bytes{name="experiment"}[20m])'
-net_rcv_query='rate(container_network_receive_bytes_total{name="experiment"}[20m])'
-net_trmt_query='rate(container_network_transmit_bytes_total{name="experiment"}[20m])'
+cpu_query="rate(container_cpu_usage_seconds_total{name=\"experiment\"}[$timeframe])"
+mem_query="avg_over_time(container_memory_usage_bytes{name=\"experiment\"}[$timeframe])"
+net_rcv_query="rate(container_network_receive_bytes_total{name=\"experiment\"}[$timeframe])"
+net_trmt_query="rate(container_network_transmit_bytes_total{name=\"experiment\"}[$timeframe])"
 
 cp -n $results_tmp_file $results_file
 

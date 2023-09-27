@@ -11,7 +11,7 @@ services:
     - /var/lib/docker/:/var/lib/docker:ro
   avalanche:
     image: quay.io/prometheuscommunity/avalanche:main
-    command: '--metric-count=5000 --series-count=10 --label-count=10 --series-interval=10000 --metric-interval=10000'
+    command: '--metric-count=${METRIC_COUNT} --series-count=10 --label-count=10 --series-interval=10000 --metric-interval=10000'
     depends_on:
       - cadvisor
   otel-col:
