@@ -64,3 +64,7 @@ to populate a CSV file in the current directory with the results of the
 current run (averages over the the last 5 min). The script can be run
 subsequently to add more result lines.
 
+## PromCon EU 2023 talk
+
+Results have been shown in lightning talk at PromCon EU 2023 in Berlin.
+Find the slides [here](talks/DanielMohr_PromAgentVsOtelCol.pdf).
